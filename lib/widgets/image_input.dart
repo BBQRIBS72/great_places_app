@@ -22,10 +22,13 @@ class _ImageInputState extends State<ImageInput> {
       source: ImageSource.camera,
       maxWidth: 600,
     );
+    if (imageFile == null) {
+      return;
+    }
     setState(() {
-      _storedImage = File(imageFile!.path);
+      _storedImage = File(imageFile.path);
     });
-    final coolFixImage = File((imageFile as XFile).path);
+    final coolFixImage = File((imageFile).path);
     final appDir = await syspath.getApplicationDocumentsDirectory();
     final fileName = path.basename(coolFixImage.path);
     final savedImage = await coolFixImage.copy('${appDir.path}/$fileName');
@@ -66,7 +69,7 @@ class _ImageInputState extends State<ImageInput> {
             label: const Text('Take Picture'),
             onPressed: _takePicture,
             style: TextButton.styleFrom(
-                foregroundColor: Theme.of(context).primaryColor),
+                foregroundColor: Theme.of(context).colorScheme.primary),
           ),
         ),
       ],
